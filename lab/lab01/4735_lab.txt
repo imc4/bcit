@@ -1,0 +1,13 @@
+Sign Magnitude:
+
+0001 0101 0111 0010 - Load address 0x572 to accumulator (Accumulator value: 0000 0000 0000 0110, 0x572 value: 0000 0000 0000 0110)
+0111 0101 0111 0011 - Load address 0x573 to R1 (Accumulator value: 0000 0000 0000 0110, 0x573 value: 1000 0000 0000 0111)
+0100 0000 0000 0000 - Adds contents of accumulator and R1 (Accumulator value: 1000 0000 0000 0001, R1 value: 1000 0000 0000 0111)
+0010 0101 0111 0100 - Store contents of accumulator to 0x574 (Accumulator/0x574 value: 1000 0000 0000 0001)
+
+Two's Complement:
+
+0001 0101 0111 0010 - Load address 0x572 to accumulator (Accumulator value: 0000 0000 0000 0110, 0x572 value: 0000 0000 0000 0110)
+0111 0101 0111 0011 - Load address 0x573 to R1 (Accumulator value: 0000 0000 0000 0110, 0x573 value: 1111 1111 1111 1001)
+0100 0000 0000 0000 - Adds contents of R1 to accumulator (Accumulator value after: 1111 1111 1111 1111, R1 value: 1111 1111 1111 1001)
+0010 0101 0111 0100 - Store contents of accumulator to 0x574 (Accumulator/0x574 value: 1111 1111 1111 1111)

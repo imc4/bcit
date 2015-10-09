@@ -1,0 +1,24 @@
+os has 2 main parts
+- resource manager
+- user interface
+
+basic system elements (all resources)
+- processor
+- main memory
+- io modules
+- system bus
+
+TOP-LEVEL COMPONENTS
+2 kinds of circuits in a cpu
+- execution
+- control of execution
+
+registers allow execution
+
+when a program is run
+- first address goes into (PC)
+  - OS executes this task (DISPATCHER)
+    - puts address in PC
+- address from PC goes into memory address register (MAR)
+- MAR into MDR/MBR (same thing)
+- moves from memory data register (MDR) into instruction register (IR)
