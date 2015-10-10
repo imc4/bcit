@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <semaphore.h>
 #include <time.h>
+#include <unistd.h>
 
 // prototypes
 void* countdown(void*);
@@ -12,7 +13,10 @@ void* countup(void*);
 int threads;
 // number of seconds to execute for
 int sec;
+// timer flag 0: timer off, 1: timer on
+int timer = 0;
 
+// create threads
 int main(int argc, char* argv[]) {
 	// verify command line args
 	if(argc != 3) {
@@ -36,30 +40,42 @@ int main(int argc, char* argv[]) {
 		sec = atoi(argv[2]);
 	}
 
-	int i = 0;
+	int id = 0;
 	pthread_t tid;
 
-	pthread_create(&tid, NULL, countdown, (void*) i);
+	// create timer thread
+	pthread_create(&tid, NULL, countdown, (void*)(intptr_t) id);
+	
+	// create counting threads
+	int i = 0;
+	pthread_t counter;
+	for(i = 0; i < threads; ++i) {
+		pthread_create(&counter, NULL, countup, (void*)(intptr_t) id);
+	}	
 
-	for(i = 1; i < threads; i++) {
-		pthread_create(&tid, NULL, countup, (void*) i);
-	}
+	pthread_join(tid, NULL);
+
+	timer = 0;
 	
 	return 0;
 }
 
 // sets a countdown thread
 void* countdown(void* arg) {
-	int id = (int) arg;
-	sec--;
-	printf("tid: %d, timer: %d\n", id, sec);
+	timer = 1;
+	sleep(sec);
+
 	return NULL;
 }
 
-// threads will count from 0-infinity until timer is up
+// threads will count from 0 until timer is up
 void* countup(void* arg) {
-	int id = (int) arg;
-	static int s = 0;
-	printf("tid: %d, s: %d\n", id, ++s);
+	int id = (intptr_t) arg;
+	int count = 0;
+	
+	while(timer) {
+		printf("Thread: %d, Count: %d\n", id, count++);
+	}
+
 	return NULL;
 }
